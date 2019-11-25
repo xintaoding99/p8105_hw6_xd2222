@@ -8,6 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(modelr)
+set.seed(1)
 knitr::opts_chunk$set(echo = TRUE)
 
 ```
@@ -102,3 +103,34 @@ weather_df =
 
 ```
 
+```{r}
+# Bootstrapping
+
+weather_df %>% 
+  modelr::bootstrap(n = 5000) %>% 
+  mutate(models = map(strap, ~ lm(tmax ~ tmin, data = .x)),
+         results = map(models, broom::tidy)) %>% 
+  select(-strap, -models) %>% 
+  unnest(results) %>% 
+  group_by(.id) %>% 
+  summarize(log_coef = sum(log(estimate))) %>% 
+  ggplot(aes(x = log_coef)) + geom_density() +
+  labs(title = "Distribution of log(β^0 ∗ β^1")
+      
+weather_df %>% 
+  modelr::bootstrap(n = 5000) %>% 
+  mutate(models = map(strap, ~ lm(tmax ~ tmin, data = .x)),
+         results = map(models, broom::glance)) %>% 
+  select(-strap, -models) %>% 
+  unnest(results) %>% 
+  group_by(.id) %>% 
+  summarize(r_squared = unique(r.squared)) %>% 
+  ggplot(aes(x = r_squared)) + geom_density() +
+  labs(title = "Distribution of R^2")
+  
+```
+
+Both the distribution of r squared and log(β̂0∗β̂1) appears to be a little left skewed,with log(β̂0∗
+β̂1) more normally distributed . 
+ . 
+ . 
