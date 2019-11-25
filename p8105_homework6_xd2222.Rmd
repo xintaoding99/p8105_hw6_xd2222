@@ -130,7 +130,4 @@ weather_df %>%
   
 ```
 
-Both the distribution of r squared and log(β̂0∗β̂1) appears to be a little left skewed,with log(β̂0∗
-β̂1) more normally distributed . 
- . 
- . 
+Both the distribution of r squared and log(β^0 ∗ β^1) sligntly left-skewed, with distribution of log(β^0 ∗ β^1) being more normally distributed
