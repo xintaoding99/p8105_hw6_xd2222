@@ -2,7 +2,7 @@
 title: "p8105 Homework 6"
 author: "Xintao Ding"
 date: "11/19/2019"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
